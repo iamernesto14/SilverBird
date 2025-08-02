@@ -1,0 +1,14 @@
+nav {
+  font-family: 'Outfit', sans-serif;
+}
+
+// Optional: Add custom hover effects or animations
+button {
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
