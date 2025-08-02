@@ -1,1 +1,97 @@
-<p>sidebar works!</p>
+<nav
+  class="bg-[#161D2F] 
+         flex 
+          lg:flex-col 
+         items-center 
+         lg:h-screen h-20 
+         lg:w-20 w-full 
+         py-4 lg:py-8 
+         px-4 lg:px-0 
+         justify-between
+         sticky top-0 left-0 z-50">
+
+  <!-- Logo/Brand -->
+  <div class="lg:mb-16 md:mr-6 lg:mr-0">
+    <div class="w-8 h-6 bg-[#FC4747] rounded-sm flex items-center justify-center">
+      <svg class="w-5 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M3 3h18v4H3V3zm0 6h18v12H3V9zm2 2v8h14v-8H5z" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Navigation Items -->
+  <div class="flex lg:flex-col gap-6 lg:flex-1 items-center justify-center lg:justify-start">
+    <!-- Home/Grid -->
+    <button
+        [routerLink]="['/']" 
+      (click)="setActive('home')"
+      [class]="activeItem === 'home' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
+      class="transition-colors duration-200 cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-layout-dashboard">
+        <rect width="7" height="9" x="3" y="3" rx="1" />
+        <rect width="7" height="5" x="14" y="3" rx="1" />
+        <rect width="7" height="9" x="14" y="12" rx="1" />
+        <rect width="7" height="5" x="3" y="16" rx="1" />
+      </svg>
+    </button>
+
+    <!-- Movies -->
+    <button 
+        [routerLink]="['/movies']"
+      (click)="setActive('movies')"
+      [class]="activeItem === 'movies' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
+      class="transition-colors duration-200 cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-film">
+        <rect width="18" height="18" x="3" y="3" rx="2" />
+        <path d="M7 3v18" />
+        <path d="M3 7.5h4" />
+        <path d="M3 12h18" />
+        <path d="M3 16.5h4" />
+        <path d="M17 3v18" />
+        <path d="M17 7.5h4" />
+        <path d="M17 16.5h4" />
+      </svg>
+    </button>
+
+    <!-- TV Series -->
+    <button 
+        [routerLink]="['/tv-series']"
+      (click)="setActive('tv')"
+      [class]="activeItem === 'tv' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
+      class="transition-colors duration-200 cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-tv">
+        <path d="m17 2-5 5-5-5" />
+        <rect width="20" height="15" x="2" y="7" rx="2" />
+      </svg>
+    </button>
+
+    <!-- Bookmarks -->
+    <button
+      [routerLink]="['/bookmarked']" 
+      (click)="setActive('bookmarks')"
+      [class]="activeItem === 'bookmarks' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
+      class="transition-colors duration-200 cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-bookmark">
+        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- User Avatar -->
+  <div class="lg:mt-auto md:ml-auto lg:ml-0">
+    <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
+      <img 
+        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+        alt="User Avatar" 
+        class="w-full h-full object-cover">
+    </div>
+  </div>
+</nav>
