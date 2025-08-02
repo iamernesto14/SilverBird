@@ -22,7 +22,8 @@
   <!-- Navigation Items -->
   <div class="flex lg:flex-col gap-6 lg:flex-1 items-center justify-center lg:justify-start">
     <!-- Home/Grid -->
-    <button 
+    <button
+        [routerLink]="['/']" 
       (click)="setActive('home')"
       [class]="activeItem === 'home' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
       class="transition-colors duration-200 cursor-pointer">
@@ -38,6 +39,7 @@
 
     <!-- Movies -->
     <button 
+        [routerLink]="['/movies']"
       (click)="setActive('movies')"
       [class]="activeItem === 'movies' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
       class="transition-colors duration-200 cursor-pointer">
@@ -57,6 +59,7 @@
 
     <!-- TV Series -->
     <button 
+        [routerLink]="['/tv-series']"
       (click)="setActive('tv')"
       [class]="activeItem === 'tv' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
       class="transition-colors duration-200 cursor-pointer">
@@ -69,11 +72,12 @@
     </button>
 
     <!-- Bookmarks -->
-    <button 
+    <button
+      [routerLink]="['/bookmarked']" 
       (click)="setActive('bookmarks')"
       [class]="activeItem === 'bookmarks' ? 'text-white' : 'text-[#5A698F] hover:text-[#FC4747]'"
       class="transition-colors duration-200 cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="lucide lucide-bookmark">
         <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
