@@ -1,0 +1,122 @@
+<div [class]="cardClasses" (click)="onMovieClick()" class="cursor-pointer">
+  <!-- Bookmark Icon -->
+  <button
+    *ngIf="showBookmark"
+    class="absolute top-2 right-2 p-2 bg-black/60 rounded-full hover:bg-black/80 transition z-10 cursor-pointer"
+    [attr.aria-label]="'Bookmark ' + movie.title"
+    (click)="onBookmarkClick($event)"
+  >
+    <svg
+      *ngIf="!movie.bookmarked"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      class="w-4 h-4 text-white"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"
+      />
+    </svg>
+
+    <svg
+      *ngIf="movie.bookmarked"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      class="w-4 h-4 text-white"
+    >
+      <path d="M5 3a2 2 0 00-2 2v16l9-6 9 6V5a2 2 0 00-2-2H5z" />
+    </svg>
+  </button>
+
+  <!-- Play Button (for trending variant) -->
+  <button
+    *ngIf="showPlayButton && variant === 'trending'"
+    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/60 rounded-full p-3 hover:bg-black/80 transition z-10 cursor-pointer"
+    [attr.aria-label]="'Play ' + movie.title"
+    (click)="onPlayClick($event)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      class="w-5 h-5 text-white"
+    >
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  </button>
+
+  <!-- Movie Poster -->
+  <img
+    [src]="getImageUrl()"
+    [alt]="movie.title"
+    [class]="imageClasses"
+    loading="lazy"
+  />
+
+  <!-- Trending Variant Overlay Info -->
+  <div
+    *ngIf="variant === 'trending'"
+    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3"
+  >
+    <!-- Category and Rating Badge -->
+    <div class="flex items-center justify-between mb-1">
+      <span
+        *ngIf="movie.category"
+        class="bg-gray-700 text-white text-xs px-2 py-1 rounded uppercase"
+      >
+        {{ movie.category }}
+      </span>
+      <span
+        *ngIf="movie.rating"
+        class="bg-gray-700 text-white text-xs px-2 py-1 rounded"
+      >
+        {{ movie.rating }}
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-sm font-semibold text-white truncate mb-1">
+      {{ movie.title }}
+    </h3>
+
+    <!-- Rating and Views -->
+    <div class="flex items-center justify-between text-xs">
+      <div *ngIf="showRating" class="flex items-center">
+        <span class="text-yellow-400 mr-1">★</span>
+        <span class="text-white">{{ formatRating(movie.vote_average) }}</span>
+      </div>
+      <span *ngIf="showViews && movie.views" class="text-gray-300 uppercase">
+        {{ movie.views }} views
+      </span>
+    </div>
+  </div>
+
+  <!-- Recommended/Default Variant Content -->
+  <div *ngIf="variant !== 'trending'" class="p-4">
+    <h3 class="text-lg font-semibold truncate mb-1">{{ movie.title }}</h3>
+    <p class="text-sm text-gray-400 mb-2">
+      Released: {{ movie.release_date }}
+    </p>
+    
+    <!-- Rating and Popularity Row -->
+    <div class="flex items-center justify-between">
+      <span
+        *ngIf="showRating"
+        class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded flex items-center"
+      >
+        ★ {{ formatRating(movie.vote_average) }}
+      </span>
+      <span
+        *ngIf="showPopularity"
+        class="text-xs uppercase text-gray-400"
+      >
+        Popularity: {{ formatPopularity(movie.popularity) }}
+      </span>
+    </div>
+  </div>
+</div>

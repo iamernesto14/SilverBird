@@ -1,1 +1,69 @@
-<p>trending-movie works!</p>
+<div class="trending-section w-full">
+  <h2 class="text-2xl font-light my-4 mx-6">Trending Movies</h2>
+  
+  <div class="relative group w-full max-w-full">
+    <!-- Left Arrow -->
+    <button 
+      class="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-50 disabled:opacity-30 disabled:cursor-not-allowed"
+      [disabled]="!canScrollLeft"
+      (click)="scrollLeft()"
+      aria-label="Scroll left"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- Right Arrow -->
+    <button 
+      class="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 z-50 group-hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
+      [disabled]="!canScrollRight"
+      (click)="scrollRight()"
+      aria-label="Scroll right"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+    <!-- Movies Container -->
+    <div 
+      #scrollContainer
+      class="flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth px-6 py-4 scrollbar-hide w-full"
+      (scroll)="onScroll($event)"
+      (wheel)="onWheel($event)"
+      (touchstart)="onTouchStart($event)"
+      (touchmove)="onTouchMove($event)"
+    >
+      <app-movie-card
+        *ngFor="let movie of trendingMovies; trackBy: trackByMovieId"
+        [movie]="movie"
+        variant="trending"
+        class="flex-shrink-0"
+        [style.width.px]="cardWidth"
+      ></app-movie-card>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && trendingMovies.length === 0" class="flex justify-center items-center py-8">
+      <p class="text-gray-400">No trending movies available</p>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator Dots (Optional) -->
+  <div class="flex justify-center mt-4 space-x-2">
+    <button
+      *ngFor="let dot of scrollDots; let i = index"
+      class="w-2 h-2 rounded-full transition-colors duration-200"
+      [class.bg-white]="i === currentDot"
+      [class.bg-gray-500]="i !== currentDot"
+      (click)="scrollToPage(i)"
+      [attr.aria-label]="'Go to page ' + (i + 1)"
+    ></button>
+  </div>
+</div>
