@@ -1,23 +1,11 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { BookmarkService } from '../../services/bookmark/bookmark.service';
+import { Movie } from '../../model/movie';
+import { Subscription } from 'rxjs';
 
 export type CardVariant = 'trending' | 'recommended' | 'featured' | 'compact';
 export type CardSize = 'small' | 'medium' | 'large';
-
-export interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-  popularity: number;
-  overview?: string;
-  genre_ids?: number[];
-  bookmarked?: boolean;
-  category?: string;
-  rating?: string;
-  views?: string;
-}
 
 @Component({
   selector: 'app-movie-card',
@@ -25,7 +13,7 @@ export interface Movie {
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit, OnDestroy {
   @Input() movie!: Movie;
   @Input() variant: CardVariant = 'recommended';
   @Input() size: CardSize = 'medium';
@@ -35,11 +23,30 @@ export class MovieCardComponent {
   @Input() showPopularity: boolean = true;
   @Input() showViews: boolean = false;
   @Input() customClass: string = '';
-
+  
   @Output() movieClick = new EventEmitter<Movie>();
   @Output() playClick = new EventEmitter<Movie>();
   @Output() bookmarkClick = new EventEmitter<Movie>();
   @Output() movieSelected = new EventEmitter<number>();
+
+  isBookmarked = false;
+  private subscription?: Subscription;
+
+  constructor(private bookmarkService: BookmarkService) { }
+  
+  ngOnInit() {
+    // Initialize bookmark state
+    this.isBookmarked = this.bookmarkService.isBookmarked(this.movie.id);
+    
+    // Listen for bookmark changes to keep UI in sync
+    this.subscription = this.bookmarkService.bookmarkedMovies$.subscribe(() => {
+      this.isBookmarked = this.bookmarkService.isBookmarked(this.movie.id);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
 
   onCardClick() {
     this.movieSelected.emit(this.movie.id);
@@ -103,6 +110,7 @@ export class MovieCardComponent {
 
   onBookmarkClick(event: Event): void {
     event.stopPropagation();
+    this.bookmarkService.toggleBookmark(this.movie);
     this.bookmarkClick.emit(this.movie);
   }
 
@@ -110,7 +118,7 @@ export class MovieCardComponent {
     if (this.movie.poster_path) {
       return `https://image.tmdb.org/t/p/w500${this.movie.poster_path}`;
     }
-    return 'assets/images/placeholder-movie.jpg'; // fallback image
+    return 'assets/images/placeholder-movie.jpg';
   }
 
   formatRating(rating: number): string {

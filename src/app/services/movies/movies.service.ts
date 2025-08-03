@@ -39,4 +39,14 @@ export class MoviesService {
       headers
     });
   }
+
+  searchMovies(query: string): Observable<any> {
+    const headers = {
+      Authorization: environment.tmdb.token,
+      'Content-Type': 'application/json'
+    };
+    return this.http.get(`${this.apiUrl}/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`, {
+      headers
+    });
+  }
 }

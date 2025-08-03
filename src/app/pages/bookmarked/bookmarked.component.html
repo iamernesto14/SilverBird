@@ -1,1 +1,19 @@
-<p>bookmarked works!</p>
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-white mb-4">Bookmarked Movies</h2>
+
+  <div *ngIf="bookmarkedMovies.length; else noBookmarks">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <app-movie-card
+        *ngFor="let movie of bookmarkedMovies"
+        [movie]="movie"
+        
+        (bookmarkClick)="removeBookmark($event)"
+        (movieSelected)="goToDetails($event)"
+      ></app-movie-card>
+    </div>
+  </div>
+
+  <ng-template #noBookmarks>
+    <p class="text-gray-400">No bookmarked movies yet.</p>
+  </ng-template>
+</div>

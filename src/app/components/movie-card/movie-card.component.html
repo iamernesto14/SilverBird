@@ -7,7 +7,7 @@
     (click)="onBookmarkClick($event)"
   >
     <svg
-      *ngIf="!movie.bookmarked"
+      *ngIf="!isBookmarked"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -23,7 +23,7 @@
     </svg>
 
     <svg
-      *ngIf="movie.bookmarked"
+      *ngIf="isBookmarked"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
       viewBox="0 0 24 24"
