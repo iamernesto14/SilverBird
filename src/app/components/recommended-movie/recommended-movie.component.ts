@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MoviesService } from '../../services/movies/movies.service';
 import { CommonModule } from '@angular/common';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recommended-movie',
@@ -12,7 +13,7 @@ import { MovieCardComponent } from '../movie-card/movie-card.component';
 export class RecommendedMovieComponent {
   recommendedMovies: any[] = [];
 
-  constructor(private moviesService: MoviesService) { }
+  constructor(private moviesService: MoviesService, private router: Router) { }
 
   ngOnInit() {
     this.moviesService.getRecommendations(755898).subscribe({
@@ -24,4 +25,8 @@ export class RecommendedMovieComponent {
       }
     });
   }
+
+  goToDetails(movieId: number) {
+  this.router.navigate(['/movies', movieId]);
+}
 }

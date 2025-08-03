@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetector
 import { MoviesService } from '../../services/movies/movies.service';
 import { CommonModule } from '@angular/common';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trending-movie',
@@ -28,7 +29,8 @@ export class TrendingMovieComponent implements OnInit, AfterViewInit, OnDestroy 
 
   constructor(
     private moviesService: MoviesService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void { 
@@ -259,4 +261,8 @@ export class TrendingMovieComponent implements OnInit, AfterViewInit, OnDestroy 
         break;
     }
   }
+
+  goToDetails(movieId: number) {
+  this.router.navigate(['/movies', movieId]);
+}
 }

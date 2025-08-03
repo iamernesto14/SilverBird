@@ -21,7 +21,7 @@ export interface Movie {
 
 @Component({
   selector: 'app-movie-card',
-  imports: [DecimalPipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
@@ -39,6 +39,11 @@ export class MovieCardComponent {
   @Output() movieClick = new EventEmitter<Movie>();
   @Output() playClick = new EventEmitter<Movie>();
   @Output() bookmarkClick = new EventEmitter<Movie>();
+  @Output() movieSelected = new EventEmitter<number>();
+
+  onCardClick() {
+    this.movieSelected.emit(this.movie.id);
+  }
 
   get cardClasses(): string {
     const baseClasses = 'relative rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105';

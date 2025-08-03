@@ -41,6 +41,7 @@
         variant="trending"
         class="flex-shrink-0"
         [style.width.px]="cardWidth"
+        (movieSelected)="goToDetails($event)"
       ></app-movie-card>
     </div>
 

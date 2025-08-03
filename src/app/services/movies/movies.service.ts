@@ -29,4 +29,14 @@ export class MoviesService {
       headers
     });
   }
+
+  getMovieDetails(movieId: number): Observable<any> {
+    const headers = {
+      Authorization: environment.tmdb.token,
+      'Content-Type': 'application/json'
+    };
+    return this.http.get(`${this.apiUrl}/movie/${movieId}?language=en-US`, {
+      headers
+    });
+  }
 }
