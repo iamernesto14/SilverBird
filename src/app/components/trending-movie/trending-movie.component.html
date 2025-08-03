@@ -1,7 +1,13 @@
 <div class="trending-section w-full">
-  <h2 class="text-2xl font-light my-4 mx-6">Trending Movies</h2>
+  <div class="flex items-center justify-between mx-6 mb-4">
+    <h2 class="text-2xl font-light">Trending Movies</h2>
+  </div>
   
-  <div class="relative group w-full max-w-full">
+  <div 
+    class="relative group w-full max-w-full"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+  >
     <!-- Left Arrow -->
     <button 
       class="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 z-50 disabled:opacity-30 disabled:cursor-not-allowed"
@@ -34,6 +40,8 @@
       (wheel)="onWheel($event)"
       (touchstart)="onTouchStart($event)"
       (touchmove)="onTouchMove($event)"
+      tabindex="0"
+      (keydown)="onKeyDown($event)"
     >
       <app-movie-card
         *ngFor="let movie of trendingMovies; trackBy: trackByMovieId"
@@ -56,8 +64,8 @@
     </div>
   </div>
 
-  <!-- Scroll Indicator Dots (Optional) -->
-  <div class="flex justify-center mt-4 space-x-2">
+  <!-- Scroll Indicator Dots -->
+  <div class="flex justify-center mt-4 space-x-2" *ngIf="scrollDots.length > 1">
     <button
       *ngFor="let dot of scrollDots; let i = index"
       class="w-2 h-2 rounded-full transition-colors duration-200"

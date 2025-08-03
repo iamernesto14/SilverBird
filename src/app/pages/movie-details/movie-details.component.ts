@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MoviesService } from '../../services/movies/movies.service';
 import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-movie-details',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './movie-details.component.html'
 })
 export class MovieDetailsComponent implements OnInit {
@@ -24,5 +24,8 @@ export class MovieDetailsComponent implements OnInit {
     });
   }
 
+  goBack(): void {
+    window.history.back();
+  }
   
 }

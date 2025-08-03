@@ -33,23 +33,6 @@
     </svg>
   </button>
 
-  <!-- Play Button (for trending variant) -->
-  <button
-    *ngIf="showPlayButton && variant === 'trending'"
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/60 rounded-full p-3 hover:bg-black/80 transition z-10 cursor-pointer"
-    [attr.aria-label]="'Play ' + movie.title"
-    (click)="onPlayClick($event)"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-      class="w-5 h-5 text-white"
-    >
-      <path d="M8 5v14l11-7z" />
-    </svg>
-  </button>
-
   <!-- Movie Poster -->
   <img
     [src]="getImageUrl()"
